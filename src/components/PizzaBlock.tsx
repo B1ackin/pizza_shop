@@ -1,7 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
+
+export type PizzasType = {
+    id?: number
+    imageUrl: string
+    title: string
+    types: Array<number>
+    sizes: Array<number>
+    price: number
+    category?: number
+    rating?: number
+}
 
 
-export const PizzaBlock = () => {
+export const PizzaBlock = (props: PizzasType) => {
+    const [activeType, setActiveType] = useState(0)
+    const [activeSize, setActiveSize] = useState(0)
+
+    const typesName = ['тонкое', 'традиционное']
+
     return (
         <div className="pizza-block">
             <img
@@ -9,21 +25,33 @@ export const PizzaBlock = () => {
                 src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
                 alt="Pizza"
             />
-            <h4 className="pizza-block__title">Чизбургер-пицца</h4>
+            <h4 className="pizza-block__title">{props.title}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    <li className="active">тонкое</li>
-                    <li>традиционное</li>
+                    {
+                        props.types.map((typeId) => (
+                            <li
+                                onClick={() => setActiveType(typeId)}
+                                className={activeType === typeId ? "active" : ''}
+                            >{typesName[typeId]}</li>
+                        ))
+                    }
                 </ul>
                 <ul>
-                    <li className="active">26 см.
-                    </li>
-                    <li>30 см.</li>
-                    <li>40 см.</li>
+                    {
+                        props.sizes.map((size,i) => (
+                            <li
+                            onClick={() => setActiveSize(i)}
+                            className={activeSize === i ? 'active' : ''}
+                            >
+                                {size}
+                            </li>
+                        ))
+                    }
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от 395 ₽</div>
+                <div className="pizza-block__price">от {props.price} ₽</div>
                 <div className="button button--outline button--add">
                     <svg
                         width="12"

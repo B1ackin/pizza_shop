@@ -4,6 +4,19 @@ import {Header} from "./components/Header";
 import {Categories} from "./components/Categories";
 import {Sort} from "./components/Sort";
 import {PizzaBlock} from "./components/PizzaBlock";
+import pizzas from './assets/pizzas.json'
+
+export type PizzasType = {
+    id: number
+    imageUrl: string
+    title: string
+    types: Array<number>
+    sizes: Array<number>
+    price: number
+    category: number
+    rating: number
+}
+
 
 function App() {
   return (
@@ -17,7 +30,18 @@ function App() {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
-              <PizzaBlock />
+                {
+                    pizzas.map((pizza: PizzasType) => (
+                        <PizzaBlock
+                            imageUrl={pizza.imageUrl}
+                            title={pizza.title}
+                            types={pizza.types}
+                            sizes={pizza.sizes}
+                            price={pizza.price}
+                        />
+                    ))
+                }
+
             </div>
           </div>
         </div>
